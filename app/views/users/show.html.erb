@@ -1,0 +1,9 @@
+<h1>User Profile</h1>
+
+Username <%= @user.username %>
+
+Actions
+<%= link_to "Add Friends", "#" %>
+<%= link_to "Remove Friends", "#" %>
+<%= link_to "Friend Requests", "#" %>
+<%= link_to "Unregister", user_path, :method => :DELETE %>

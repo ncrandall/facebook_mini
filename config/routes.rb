@@ -1,4 +1,14 @@
 Friendcircle::Application.routes.draw do
+  get "static/home"
+  
+  root :to => 'static#home'
+
+  resources :sessions, :only => [:new, :create, :destroy]
+  resources :users
+  match '/sign_up', :to => "users#new"
+  match '/log_in', :to => "sessions#new"
+  match '/log_out', :to => "sessions#destroy", via: :delete
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +58,6 @@ Friendcircle::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 
