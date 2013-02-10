@@ -1,4 +1,8 @@
 Friendcircle::Application.routes.draw do
+  get "friendships/create"
+
+  get "friendships/destroy"
+
   get "static/home"
   
   root :to => 'static#home'

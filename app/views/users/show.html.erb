@@ -3,7 +3,21 @@
 Username <%= @user.username %>
 
 Actions
-<%= link_to "Add Friends", "#" %>
-<%= link_to "Remove Friends", "#" %>
-<%= link_to "Friend Requests", "#" %>
-<%= link_to "Unregister", user_path, :method => :DELETE %>
+
+<% if current_user?(@user) %>
+  <%= link_to "Add Friends", "#" %>
+  <%= link_to "Remove Friends", "#" %>
+  <%= link_to "Friend Requests", "#" %>
+  <%= link_to "Unregister", user_path, :method => :DELETE %>
+<% else %>
+  <% if @user.is_friend? %>
+    <%= link_to "Remove Friend", "#" %>
+    <%= link_to "View Friends", "#" %>
+  <% else %>
+    <% if @user.awaiting_request? %>
+      Awaiting Response
+    <% else %>
+      <%= link_to "Add Friend", "#" %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -6,6 +6,7 @@ describe "User Pages" do
 
   subject { page }
 
+
   describe "Signup Page" do
 
     before { visit sign_up_path }
@@ -35,23 +36,41 @@ describe "User Pages" do
     end
   end
 
+
   describe "Show User Page" do
-    before do
-      visit user_path(user.id)
+    
+    let(:other_user) { User.create(:username => "bar") }
+
+    describe "logged in" do
+      
+      before do
+        sign_in user
+        visit user_path(user.id)
+      end
+
+      it { should have_selector("h1", text: "User Profile") }
+
+      it { should have_selector("a", text: "Add Friends") }
+      it { should have_selector("a", text: "Remove Friends") }
+      it { should have_selector("a", text: "Friend Requests") }
+      it { should have_selector("a", text: "Unregister") }
     end
 
-    it { should have_selector("h1", text: "User Profile") }
+    describe "not logged in" do
 
-    it { should have_selector("a", text: "Add Friends") }
-    it { should have_selector("a", text: "Remove Friends") }
-    it { should have_selector("a", text: "Friend Requests") }
-    it { should have_selector("a", text: "Unregister") }
+      before { visit user_path(user.id) }
+
+      it { should have_selector("h1", text: "User Profile") }
+      it { should_not have_selector("a", text: "Add Friends") }
+      it { should_not have_selector("a", text: "Remove Friends") }
+      it { should_not have_selector("a", text: "Friend Requests") }
+
+    end
 
     describe "Unregistering" do
       it "should delete the current user" do
         expect { click_link "Unregister" }.to change(User, :count).by(-1)
       end
-    
     end
   end
 end
