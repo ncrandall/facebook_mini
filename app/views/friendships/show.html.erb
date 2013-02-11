@@ -1,0 +1,5 @@
+<% if @user == current_user || current_user.friend_of?(@user) %>
+  <%= render 'friendships/friends' %>
+<% else %>
+  Must be friends with <%= @user.username %> to see their friends
+<% end %>

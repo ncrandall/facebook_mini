@@ -1,20 +1,10 @@
 <h1>Sign Up</h1>
-<% if @user.errors.any? %>
-<div class="errors">
-  <div class="alert alter-error">
-    There was a problem with your form
-  </div>
-  <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li> <%= msg %> </li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
-
+<%= render 'error_messages' %>
+<div class="span4 row">
 <%= form_for(@user) do |u| %>
-  <%= u.label :username %>
+  <p><%= u.label :username %></p>
   <%= u.text_field :username %>
 
-  <%= u.submit "sign up", :class => "btn btn-primary" %>
+  <p class="pull-right"><%= u.submit "sign up", :class => "btn btn-primary" %></p>
 <% end %>
+</div>

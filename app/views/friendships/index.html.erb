@@ -1,0 +1,18 @@
+<h1>Friendships for <%= @user.username %></h1>
+
+<h3>Received Friend Requests</h3>
+<ul>
+<% @user.friend_request_list.each do |f| %>
+  <li><%= f.username %> <%= link_to "accept", friendships_path(f,:id => f.id), :method => :POST %>
+    <%= link_to "decline", friendship_path(f.id), :method => :DELETE %></li>
+<% end %>
+</ul>
+
+<h3>Sent Friend Requests</h3>
+<ul>
+<% @user.awaiting_friend_request_list.each do |f| %>
+  <li><%= f.username %> <%= link_to "remove", friendship_path(f.id), :method => :DELETE %></li>
+<% end %>
+</ul>
+
+<%= render 'friendships/friends' %>

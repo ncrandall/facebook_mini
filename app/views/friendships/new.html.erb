@@ -1,0 +1,8 @@
+<h1>Add Friends</h1>
+
+<%= form_for(@user, :url => friendships_path) do |u| %>
+  <%= u.label :username %>
+  <%= u.text_field :username %>
+
+  <%= u.submit "Add Friend", :class => "btn btn-primary" %>
+<% end %>

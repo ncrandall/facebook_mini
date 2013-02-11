@@ -5,6 +5,20 @@ describe "Authentication Pages" do
 
   subject { page }
 
+  describe "All pages" do
+    before { visit root_path }
+
+    describe "when not logged in" do
+      it { should have_link "Login" }
+    end
+
+    describe "when logged in" do
+      before { sign_in(user) } 
+      it { should have_link "Log Out" }
+    end
+
+  end
+
   describe "Login Page" do
 
     before do

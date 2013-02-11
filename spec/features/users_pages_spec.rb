@@ -51,8 +51,7 @@ describe "User Pages" do
       it { should have_selector("h1", text: "User Profile") }
 
       it { should have_selector("a", text: "Add Friends") }
-      it { should have_selector("a", text: "Remove Friends") }
-      it { should have_selector("a", text: "Friend Requests") }
+      it { should have_selector("a", text: "Manage Friends") }
       it { should have_selector("a", text: "Unregister") }
     end
 
@@ -62,8 +61,8 @@ describe "User Pages" do
 
       it { should have_selector("h1", text: "User Profile") }
       it { should_not have_selector("a", text: "Add Friends") }
-      it { should_not have_selector("a", text: "Remove Friends") }
-      it { should_not have_selector("a", text: "Friend Requests") }
+      it { should_not have_selector("a", text: "Manage Friends") }
+      it { should_not have_selector("a", text: "Unregister") }
 
     end
 

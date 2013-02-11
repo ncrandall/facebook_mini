@@ -1,10 +1,10 @@
 <h1>Login</h1>
 
+<div class="span4 row">
 <%= form_for(:session, url: sessions_path) do |u| %>
-  <%= u.label :username %>
+  <p><%= u.label :username %></p>
   <%= u.text_field :username %>
 
-  <%= u.submit "login", :class => "btn btn-primary" %>
+  <p class="pull-right"><%= u.submit "login", :class => "btn btn-primary" %></p>
 <% end %>
-
-<%= link_to "new user?", sign_up_path %>
+</div>

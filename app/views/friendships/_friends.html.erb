@@ -1,0 +1,10 @@
+<h3><%= @user.username.capitalize %> Friends</h3>
+<ul>
+<% if @user.friend_list.count == 0 %>
+  <p>No friends yet. <%= link_to "Add friends", new_friendship_path %></p>
+<% else %>
+  <% @user.friend_list.each do |f| %>
+    <li><%= f.username %> <%= link_to "profile", user_path(f) %> <%= link_to "remove", friendship_path(f.id), :method => :DELETE %></li>
+  <% end %>
+<% end %>
+</ul>

@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:success] = "Welcome to FriendCircle"
+      sign_in @user
       redirect_to user_path(@user.id)
     else
       render 'new'

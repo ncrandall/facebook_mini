@@ -1,1 +1,37 @@
 @import "bootstrap";
+
+/* HTML Elements */
+
+body {
+  margin-top: 60px;
+}
+
+
+/* Header */
+
+#logo {
+  float: left;
+  font-size: 24pt;
+  padding-top: 10px;
+  color: #FFF;
+  font-weight: bold;
+  &:hover {
+    text-decoration: none;
+    color: #FFF
+  }
+}
+
+/* Misc */
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.errors {
+  ul {
+    li {
+     font-size: 10pt;
+     color: #FF0000;
+    }
+  }
+}

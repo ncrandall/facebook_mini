@@ -1,7 +1,4 @@
 Friendcircle::Application.routes.draw do
-  get "friendships/create"
-
-  get "friendships/destroy"
 
   get "static/home"
   
@@ -9,6 +6,8 @@ Friendcircle::Application.routes.draw do
 
   resources :sessions, :only => [:new, :create, :destroy]
   resources :users
+  resources :friendships, :only => [:index, :show, :new, :create, :destroy]
+
   match '/sign_up', :to => "users#new"
   match '/log_in', :to => "sessions#new"
   match '/log_out', :to => "sessions#destroy", via: :delete

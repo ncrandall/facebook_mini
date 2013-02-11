@@ -1,27 +1,50 @@
 class FriendshipsController < ApplicationController
-  def create
-    @friendship = current_user.friendships.build(:friend_id => params[:id])
 
-    if @friendship.save
-      flash[:notice] = "Added Friend"
+  def new
+    @user = User.new
+  end
+
+  def index
+    @user = current_user
+  end
+
+  def show
+    @user = User.where(:id => params[:id])[0]
+  end
+
+  def create
+
+    if params[:id].nil?
+      @friend = User.where(:username => params[:user][:username])[0] 
     else
-      flash[:notice] = "Unable to add friend"
+      @friend = User.where(:id => params[:id])[0]
     end
 
+    if !@friend.nil?
+      @friendship = current_user.friendships.build(:friend_id => @friend.id)
+
+      if @friendship.save
+        flash[:success] = "Added Friend"
+      else
+        flash[:error] = "Unable to add friend"
+      end
+    else
+      flash[:error] = "Couldn't find user to add as friend"
+    end
     redirect_to user_path(current_user)
   end
 
   def destroy
     @friendship = current_user.friendships.where(:friend_id => params[:id])[0]
-    @inverse_friendship = current_user.inverse_friendships.where(:friend_id => current_user.id)[0]
+    @inverse_friendship = current_user.inverse_friendships.where(:user_id => params[:id])[0]
 
-    if @friendship.destroy
-      if !@inverse_friendship.nil?
-        @inverse_friendship.destroy
-      end
-      flash[:success] = "Friendship was removed successfully"
+    if @friendship.nil? && @inverse_friendship.nil?
+      flash[:error] = "There was an issue removing friendship"
     else
-      flash[:error] = "There was an issue removing friend"
+      @friendship.destroy unless @friendship.nil?
+      @inverse_friendship.destroy unless @inverse_friendship.nil?
+
+      flash[:success] = "Friendship was removed successfully"
     end
 
     redirect_to user_path(current_user)
