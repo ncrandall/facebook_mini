@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_filter :correct_user, :only => [:destroy]
+
   def new
     @user = User.new
   end
@@ -39,4 +41,5 @@ class UsersController < ApplicationController
     end
     redirect_to root_path
   end
+
 end

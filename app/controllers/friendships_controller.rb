@@ -1,5 +1,7 @@
 class FriendshipsController < ApplicationController
 
+  before_filter :logged_in, :only => [ :destroy, :create, :index, :show ]
+
   def new
     @user = User.new
   end
@@ -20,7 +22,7 @@ class FriendshipsController < ApplicationController
       @friend = User.where(:id => params[:id])[0]
     end
 
-    if !@friend.nil?
+    if !@friend.nil? && @friend != current_user
       @friendship = current_user.friendships.build(:friend_id => @friend.id)
 
       if @friendship.save
@@ -29,7 +31,7 @@ class FriendshipsController < ApplicationController
         flash[:error] = "Unable to add friend"
       end
     else
-      flash[:error] = "Couldn't find user to add as friend"
+      flash[:error] = "Couldn't add user as friend, user must exist and not be current user"
     end
     redirect_to user_path(current_user)
   end

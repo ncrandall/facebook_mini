@@ -10,14 +10,16 @@
   <%= link_to "Friend Requests", friendships_path, :class => 'btn'  %>
   <%= link_to "Unregister", user_path, :method => :DELETE, :class => 'btn', data: { confirm: "Are you sure? All information will be permanently deleted" }  %>
 <% else %>
-  <% if @user.friend_of?(current_user) %>
-    <%= link_to "Remove Friend", friendship_path(@user.id), :class => 'btn', :method => :DELETE,  data: { confirm: "Are you sure you want to remove friend?" } %>
-    <%= link_to "View Friends", friendship_path(@user), :class => 'btn' %>
-  <% else %>
-    <% if current_user.friend_request_sent?(@user) %>
-      Awaiting Response
+  <% if !current_user.nil? %>
+    <% if @user.friend_of?(current_user) %>
+      <%= link_to "Remove Friend", friendship_path(@user.id), :class => 'btn', :method => :DELETE,  data: { confirm: "Are you sure you want to remove friend?" } %>
+      <%= link_to "View Friends", friendship_path(@user), :class => 'btn' %>
     <% else %>
-      <%= link_to "Add Friend", friendships_path(@user,:id => @user.id), :class => 'btn', :method => :POST, data: { confirm: "Are you sure you want to add friend?" } %>
+      <% if current_user.friend_request_sent?(@user) %>
+        Awaiting Response
+      <% else %>
+        <%= link_to "Add Friend", friendships_path(@user,:id => @user.id), :class => 'btn', :method => :POST, data: { confirm: "Are you sure you want to add friend?" } %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
