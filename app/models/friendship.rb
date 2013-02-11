@@ -1,5 +1,5 @@
 class Friendship < ActiveRecord::Base
-  attr_accessible :accepted, :friend_id
+  attr_accessible :friend_id
 
   belongs_to :user
   belongs_to :friend, class_name: "User"
