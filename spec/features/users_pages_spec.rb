@@ -50,9 +50,35 @@ describe "User Pages" do
 
       it { should have_selector("h1", text: "User Profile") }
 
-      it { should have_selector("a", text: "Add Friends") }
-      it { should have_selector("a", text: "Manage Friends") }
-      it { should have_selector("a", text: "Unregister") }
+      it { should have_link("View Friends") }
+      it { should have_link("Add Friends") }
+      it { should have_link("Remove Friends") }
+      it { should have_link("Friend Requests") }
+      it { should have_link("Unregister") }
+      
+      describe "Unregistering" do
+        it "should delete the current user" do
+          expect { click_link "Unregister" }.to change(User, :count).by(-1)
+        end
+      end
+
+      describe "visiting a non-friend" do
+        before { visit user_path(other_user.id) }
+
+        it { should have_link("Add Friend") }
+        it { should_not have_link("View Friends") }
+      end
+
+      describe "visiting a friend" do
+        before do
+          user.friendships.create(:friend_id => other_user.id)
+          other_user.friendships.create(:friend_id => user.id)
+          visit user_path(other_user.id)
+        end
+
+        it { should have_link("Remove Friend") }
+        it { should have_link("View Friends") }
+      end
     end
 
     describe "not logged in" do
@@ -60,16 +86,12 @@ describe "User Pages" do
       before { visit user_path(user.id) }
 
       it { should have_selector("h1", text: "User Profile") }
-      it { should_not have_selector("a", text: "Add Friends") }
-      it { should_not have_selector("a", text: "Manage Friends") }
-      it { should_not have_selector("a", text: "Unregister") }
+      it { should_not have_link("View Friends") }
+      it { should_not have_link("Add Friends") }
+      it { should_not have_link("Remove Friends") }
+      it { should_not have_link("Friend Requests") }
+      it { should_not have_link("Unregister") }
 
-    end
-
-    describe "Unregistering" do
-      it "should delete the current user" do
-        expect { click_link "Unregister" }.to change(User, :count).by(-1)
-      end
     end
   end
 end
